@@ -89,6 +89,10 @@ void loop()
     {
       DecreaseSpeed();
     }
+   else if(user_input =='4')
+    {
+      readCurrentSensor();
+    }
     else
     {
       Serial.println("Invalid option entered.");
@@ -151,6 +155,13 @@ void DecreaseSpeed()
   motorGo(MOTOR_2, usMotor_Status, usSpeed);  
 }
 
+void readCurrentSensor()
+{
+ float current1,current2;
+ current1 = analogRead(A2);
+ current2 = analogRead(A0);
+ 
+}
 void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that controls the variables: motor(0 ou 1), direction (cw ou ccw) e pwm (entra 0 e 255);
 {
   if(motor == MOTOR_1)
