@@ -1,0 +1,223 @@
+/*
+ Christopher Coballes
+ Hi-Techno Barrio
+ -Test on Encoder
+ -Test on Direction
+ -Test on Speed
+ * 
+ * 
+ */
+#include <Encoder.h>
+
+#define BRAKE 0
+#define CW    1
+#define CCW   2
+#define CS_THRESHOLD 15   // Definition of safety current (Check: "1.3 Monster Shield Example").
+
+//MOTOR 1
+#define MOTOR_A1_PIN 34 //7
+#define MOTOR_B1_PIN 36 //8
+
+//MOTOR 2
+#define MOTOR_A2_PIN 32//4
+#define MOTOR_B2_PIN 38 //9
+
+#define PWM_MOTOR_1 46 //5
+#define PWM_MOTOR_2 44 //6
+
+#define CURRENT_SEN_1 A2
+#define CURRENT_SEN_2 A0 //A3
+
+#define EN_PIN_1 A6//A0
+#define EN_PIN_2 A4 //A1
+
+#define MOTOR_1 0
+#define MOTOR_2 1
+ //Encoder myEnc(5, 6);
+ 
+ Encoder myEnc1(3, 15);
+ Encoder myEnc2(2, 17);
+
+
+short usSpeed = 150;  //default motor speed
+unsigned short usMotor_Status = BRAKE;
+long oldPosition1  = -999;
+long oldPosition2  = -999;
+//   avoid using pins with LEDs attached
+void setup()                         
+{
+   Serial.println("Basic Encoder + Motor Test:");
+  pinMode(MOTOR_A1_PIN, OUTPUT);
+  pinMode(MOTOR_B1_PIN, OUTPUT);
+
+  pinMode(MOTOR_A2_PIN, OUTPUT);
+  pinMode(MOTOR_B2_PIN, OUTPUT);
+
+  pinMode(PWM_MOTOR_1, OUTPUT);
+  //pinMode(PWM_MOTOR_2, OUTPUT);
+
+  pinMode(CURRENT_SEN_1, OUTPUT);
+//  pinMode(CURRENT_SEN_2, OUTPUT);  
+
+  pinMode(EN_PIN_1, OUTPUT);
+ // pinMode(EN_PIN_2, OUTPUT);
+
+  Serial.begin(9600);              // Initiates the serial to do the monitoring 
+  Serial.println("Begin motor control");
+  Serial.println(); //Print function list for user selection
+  Serial.println("Enter number for control option:");
+  Serial.println("1. STOP");
+  Serial.println("2. FORWARD");
+  Serial.println("3. REVERSE");
+  Serial.println("4. READ CURRENT");
+  Serial.println("+. INCREASE SPEED");
+  Serial.println("-. DECREASE SPEED");
+  Serial.println();
+
+}
+
+void loop() 
+{
+  char user_input;   
+
+  
+  
+  while(Serial.available())
+  {
+    user_input = Serial.read(); //Read user input and trigger appropriate function
+    digitalWrite(EN_PIN_1, HIGH);
+    //digitalWrite(EN_PIN_2, HIGH); 
+     
+    if (user_input =='1')
+    {
+       Stop();
+    }
+    else if(user_input =='2')
+    {
+      Forward();
+    }
+    else if(user_input =='3')
+    {
+      Reverse();
+    }
+    else if(user_input =='+')
+    {
+      IncreaseSpeed();
+    }
+    else if(user_input =='-')
+    {
+      DecreaseSpeed();
+    }
+    else
+    {
+      Serial.println("Invalid option entered.");
+    }
+      
+  }
+     long newPosition1 = myEnc1.read();
+        long newPosition2 = myEnc2.read();
+     if (newPosition1 != oldPosition1) { //enc
+       oldPosition1 = newPosition1;
+       Serial.println(newPosition1);
+        Serial.println(newPosition2);
+       }//enc
+}
+
+void Stop()
+{
+  Serial.println("Stop");
+  usMotor_Status = BRAKE;
+  motorGo(MOTOR_1, usMotor_Status, 0);
+  //motorGo(MOTOR_2, usMotor_Status, 0);
+}
+
+void Forward()
+{
+  Serial.println("Forward");
+  usMotor_Status = CW;
+  motorGo(MOTOR_1, usMotor_Status, usSpeed);
+motorGo(MOTOR_2, usMotor_Status, usSpeed);
+}
+
+void Reverse()
+{
+  Serial.println("Reverse");
+  usMotor_Status = CCW;
+  motorGo(MOTOR_1, usMotor_Status, usSpeed);
+  motorGo(MOTOR_2, usMotor_Status, usSpeed);
+}
+
+void IncreaseSpeed()
+{
+  usSpeed = usSpeed + 10;
+  if(usSpeed > 255)
+  {
+    usSpeed = 255;  
+  }
+  
+  Serial.print("Speed +: ");
+  Serial.println(usSpeed);
+
+  motorGo(MOTOR_1, usMotor_Status, usSpeed);
+  motorGo(MOTOR_2, usMotor_Status, usSpeed);  
+}
+
+void DecreaseSpeed()
+{
+  usSpeed = usSpeed - 10;
+  if(usSpeed < 0)
+  {
+    usSpeed = 0;  
+  }
+  
+  Serial.print("Speed -: ");
+  Serial.println(usSpeed);
+
+  motorGo(MOTOR_1, usMotor_Status, usSpeed);
+motorGo(MOTOR_2, usMotor_Status, usSpeed);  
+}
+
+void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)        
+//Function that controls the variables: motor(0 ou 1), direction (cw ou ccw) e pwm (entra 0 e 255);
+{
+  if(motor == MOTOR_1)
+  {
+    if(direct == CW)
+    {
+      digitalWrite(MOTOR_A1_PIN, LOW); 
+      digitalWrite(MOTOR_B1_PIN, HIGH);
+    }
+    else if(direct == CCW)
+    {
+      digitalWrite(MOTOR_A1_PIN, HIGH);
+      digitalWrite(MOTOR_B1_PIN, LOW);      
+    }
+    else
+    {
+      digitalWrite(MOTOR_A1_PIN, LOW);
+      digitalWrite(MOTOR_B1_PIN, LOW);            
+    }
+    
+    analogWrite(PWM_MOTOR_1, pwm); 
+  }
+  else if(motor == MOTOR_2)
+  {
+    if(direct == CW)
+    {
+      digitalWrite(MOTOR_A2_PIN, LOW);
+      digitalWrite(MOTOR_B2_PIN, HIGH);
+    }
+    else if(direct == CCW)
+    {
+      digitalWrite(MOTOR_A2_PIN, HIGH);
+      digitalWrite(MOTOR_B2_PIN, LOW);      
+    }
+    else
+    {
+      digitalWrite(MOTOR_A2_PIN, LOW);
+      digitalWrite(MOTOR_B2_PIN, LOW);            
+    }
+    
+    analogWrite(PWM_MOTOR_2, pwm);
+  }
+}
