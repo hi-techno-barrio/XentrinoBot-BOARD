@@ -39,17 +39,17 @@ void setup()
   pinMode(MOTOR_A1_PIN, OUTPUT);
   pinMode(MOTOR_B1_PIN, OUTPUT);
 
- // pinMode(MOTOR_A2_PIN, OUTPUT);
-//  pinMode(MOTOR_B2_PIN, OUTPUT);
+  pinMode(MOTOR_A2_PIN, OUTPUT);
+  pinMode(MOTOR_B2_PIN, OUTPUT);
 
   pinMode(PWM_MOTOR_1, OUTPUT);
-  //pinMode(PWM_MOTOR_2, OUTPUT);
+  pinMode(PWM_MOTOR_2, OUTPUT);
 
   pinMode(CURRENT_SEN_1, OUTPUT);
-//  pinMode(CURRENT_SEN_2, OUTPUT);  
+  pinMode(CURRENT_SEN_2, OUTPUT);  
 
   pinMode(EN_PIN_1, OUTPUT);
- // pinMode(EN_PIN_2, OUTPUT);
+  pinMode(EN_PIN_2, OUTPUT);
 
   Serial.begin(9600);              // Initiates the serial to do the monitoring 
   Serial.println("Begin motor control");
@@ -75,7 +75,7 @@ void loop()
   {
     user_input = Serial.read(); //Read user input and trigger appropriate function
     digitalWrite(EN_PIN_1, HIGH);
-    //digitalWrite(EN_PIN_2, HIGH); 
+    digitalWrite(EN_PIN_2, HIGH); 
      
     if (user_input =='1')
     {
