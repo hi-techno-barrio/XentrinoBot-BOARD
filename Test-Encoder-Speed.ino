@@ -41,8 +41,8 @@ Encoder myEnc(A, B);
 
 Encoder myEnc1(6, 21);
 Encoder myEnc2(22, 23);
-long oldPosition1  = -999;
-long oldPosition2  = -999;
+long oldPosition1  = 0;
+long oldPosition2  = 0;
 //   avoid using pins with LEDs attached
 void setup()                         
 {
@@ -55,6 +55,7 @@ void setup()
 
   pinMode(PWM_MOTOR_1, OUTPUT);
   pinMode(PWM_MOTOR_2, OUTPUT);
+  pinMode(led, OUTPUT);
 
  // pinMode(CURRENT_SEN_1, OUTPUT);
  // pinMode(CURRENT_SEN_2, OUTPUT);  
@@ -79,7 +80,7 @@ void setup()
 void loop() 
 {
   char user_input;   
-
+  twinkle();
 
   while(Serial.available())
   {
@@ -161,6 +162,14 @@ void IncreaseSpeed()
   motorGo(MOTOR_2, usMotor_Status, usSpeed);  
 }
 
+void twinkle ()
+{
+  digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(10);                 // wait for a second
+  digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
+  delay(100);                // wait for a second
+}
+
 void DecreaseSpeed()
 {
   usSpeed = usSpeed - 10;
@@ -220,3 +229,4 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)
     analogWrite(PWM_MOTOR_2, pwm);
   }
 }
+
