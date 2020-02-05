@@ -4,8 +4,6 @@
  -Test on Encoder
  -Test on Direction
  -Test on Speed
- * 
- * 
  */
 #include <Encoder.h>
 
