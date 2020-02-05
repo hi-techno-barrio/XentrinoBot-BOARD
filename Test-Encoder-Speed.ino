@@ -31,22 +31,18 @@
 
 #define MOTOR_1 0
 #define MOTOR_2 1
-#define COUNTS_PER_REV 6533      //    1550       // wheel encoder's no of ticks per rev
 int led = 13;
 short usSpeed = 150;  //default motor speed
 unsigned short usMotor_Status = BRAKE;
-long old_rpm1  = -999;
-long old_rpm2  = -999;
+
 /* 
 Encoder myEnc(A, B);
 */
-Encoder motor1_encoder(21, 6, COUNTS_PER_REV);
-Encoder motor2_encoder(23, 22, COUNTS_PER_REV);
-//Encoder myEnc1(6, 21);
-//Encoder myEnc2(22, 23);
 
-
-
+Encoder myEnc1(6, 21);
+Encoder myEnc2(22, 23);
+long oldPosition1  = -999;
+long oldPosition2  = -999;
 //   avoid using pins with LEDs attached
 void setup()                         
 {
@@ -84,13 +80,12 @@ void loop()
 {
   char user_input;   
 
-  
-  
+
   while(Serial.available())
   {
     user_input = Serial.read(); //Read user input and trigger appropriate function
     digitalWrite(EN_PIN_1, HIGH);
-    //digitalWrite(EN_PIN_2, HIGH); 
+    digitalWrite(EN_PIN_2, HIGH); 
      
     if (user_input =='1')
     {
@@ -118,15 +113,12 @@ void loop()
     }
       
   }
-    // long newPosition1 = myEnc1.read();
-    //   long newPosition2 = myEnc2.read();
-         long current_rpm1 = motor1_encoder.getRPM();
-         long  current_rpm2 = motor2_encoder.getRPM();
-        
-     if (current_rpm1 != old_rpm1)
-     {           
-        Serial.println(current_rpm1);
-        Serial.println(current_rpm2);
+        long newPosition1 = myEnc1.read();
+        long newPosition2 = myEnc2.read();
+     if (newPosition1 != oldPosition1) { //enc
+       oldPosition1 = newPosition1;
+        Serial.println(newPosition1);
+        Serial.println(newPosition2);
        }//enc
 }
 
@@ -143,7 +135,7 @@ void Forward()
   Serial.println("Forward");
   usMotor_Status = CW;
   motorGo(MOTOR_1, usMotor_Status, usSpeed);
-motorGo(MOTOR_2, usMotor_Status, usSpeed);
+  motorGo(MOTOR_2, usMotor_Status, usSpeed);
 }
 
 void Reverse()
@@ -176,11 +168,12 @@ void DecreaseSpeed()
   {
     usSpeed = 0;  
   }
+  
   Serial.print("Speed -: ");
   Serial.println(usSpeed);
 
   motorGo(MOTOR_1, usMotor_Status, usSpeed);
-motorGo(MOTOR_2, usMotor_Status, usSpeed);  
+  motorGo(MOTOR_2, usMotor_Status, usSpeed);  
 }
 
 void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)        
@@ -227,13 +220,3 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)
     analogWrite(PWM_MOTOR_2, pwm);
   }
 }
-/*
-void printDebug()
-{
-    char buffer[50];
-    sprintf (buffer, "Encoder FrontLeft  : %ld", motor1_encoder.read());
-    nh.loginfo(buffer);
-    sprintf (buffer, "Encoder FrontRight : %ld", motor2_encoder.read());
-    nh.loginfo(buffer);
-}
-*/
