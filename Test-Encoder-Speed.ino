@@ -15,28 +15,34 @@
 #define CS_THRESHOLD 15   // Definition of safety current (Check: "1.3 Monster Shield Example").
 
 //MOTOR 1
-#define MOTOR_A1_PIN 34 //7
-#define MOTOR_B1_PIN 36 //8
+#define MOTOR_A1_PIN 2 
+#define MOTOR_B1_PIN 0 
 
 //MOTOR 2
-#define MOTOR_A2_PIN 32//4
-#define MOTOR_B2_PIN 38 //9
+#define MOTOR_A2_PIN 5
+#define MOTOR_B2_PIN 1
 
-#define PWM_MOTOR_1 46 //5
-#define PWM_MOTOR_2 44 //6
+#define PWM_MOTOR_1 4
+#define PWM_MOTOR_2 3
 
 #define CURRENT_SEN_1 A2
-#define CURRENT_SEN_2 A0 //A3
+#define CURRENT_SEN_2 A0 
 
-#define EN_PIN_1 A6//A0
-#define EN_PIN_2 A4 //A1
+#define EN_PIN_1 7 
+#define EN_PIN_2 8  
 
 #define MOTOR_1 0
 #define MOTOR_2 1
- //Encoder myEnc(5, 6);
- 
- Encoder myEnc1(3, 15);
- Encoder myEnc2(2, 17);
+int led = 13;
+short usSpeed = 150;  //default motor speed
+unsigned short usMotor_Status = BRAKE;
+
+/* 
+Encoder myEnc(A, B);
+*/
+
+Encoder myEnc1(6, 21);
+Encoder myEnc2(22, 23);
 
 
 short usSpeed = 150;  //default motor speed
