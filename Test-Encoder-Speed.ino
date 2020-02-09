@@ -43,6 +43,9 @@ Encoder myEnc1(6, 21);
 Encoder myEnc2(22, 23);
 long oldPosition1  = 0;
 long oldPosition2  = 0;
+long newPosition1 ;
+long newPosition2;
+ 
 //   avoid using pins with LEDs attached
 void setup()                         
 {
@@ -59,7 +62,6 @@ void setup()
 
  // pinMode(CURRENT_SEN_1, OUTPUT);
  // pinMode(CURRENT_SEN_2, OUTPUT);  
-
   pinMode(EN_PIN_1, OUTPUT);
   pinMode(EN_PIN_2, OUTPUT);
 
@@ -74,7 +76,6 @@ void setup()
   Serial.println("+. INCREASE SPEED");
   Serial.println("-. DECREASE SPEED");
   Serial.println();
-
 }
 
 void loop() 
@@ -113,15 +114,15 @@ void loop()
       Serial.println("Invalid option entered.");
     }
       
-  }
-        long newPosition1 = myEnc1.read();
-        long newPosition2 = myEnc2.read();
+  } //while 
+        newPosition1 = myEnc1.read();
+        newPosition2 = myEnc2.read();
      if (newPosition1 != oldPosition1) { //enc
        oldPosition1 = newPosition1;
         Serial.println(newPosition1);
         Serial.println(newPosition2);
        }//enc
-}
+ } //loop
 
 void Stop()
 {
