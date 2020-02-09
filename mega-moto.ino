@@ -31,17 +31,17 @@ void setup()
   pinMode(MOTOR_A1_PIN, OUTPUT);
   pinMode(MOTOR_B1_PIN, OUTPUT);
 
- // pinMode(MOTOR_A2_PIN, OUTPUT);
-//  pinMode(MOTOR_B2_PIN, OUTPUT);
+  pinMode(MOTOR_A2_PIN, OUTPUT);
+  pinMode(MOTOR_B2_PIN, OUTPUT);
 
   pinMode(PWM_MOTOR_1, OUTPUT);
-  //pinMode(PWM_MOTOR_2, OUTPUT);
+  pinMode(PWM_MOTOR_2, OUTPUT);
 
   pinMode(CURRENT_SEN_1, OUTPUT);
-//  pinMode(CURRENT_SEN_2, OUTPUT);  
+  pinMode(CURRENT_SEN_2, OUTPUT);  
 
   pinMode(EN_PIN_1, OUTPUT);
- // pinMode(EN_PIN_2, OUTPUT);
+  pinMode(EN_PIN_2, OUTPUT);
 
   Serial.begin(9600);              // Initiates the serial to do the monitoring 
   Serial.println("Begin motor control");
@@ -59,24 +59,26 @@ void setup()
 
 void loop() 
 {
-  char user_input;   
-
-  
-  
+ 
+  char  user_input;   
+  String serialReceived; 
   while(Serial.available())
   {
-    user_input = Serial.read(); //Read user input and trigger appropriate function
+    serialReceived = Serial.readStringUntil('\n');
+    user_input = serialReceived.charAt(0);
     digitalWrite(EN_PIN_1, HIGH);
-    //digitalWrite(EN_PIN_2, HIGH); 
-     
-    if (user_input =='1')
-    {
-       Stop();
+    digitalWrite(EN_PIN_2, HIGH); 
+
+    if (user_input== '1')
+    { 
+     Stop();
     }
-    else if(user_input =='2')
-    {
-      Forward();
+    else
+    if (user_input== '2')
+    { 
+     Forward();
     }
+    
     else if(user_input =='3')
     {
       Reverse();
@@ -89,16 +91,11 @@ void loop()
     {
       DecreaseSpeed();
     }
-   else if(user_input =='4')
-    {
-      readCurrentSensor();
-    }
     else
     {
       Serial.println("Invalid option entered.");
-    }
-      
-  }
+    }    
+  
 }
 
 void Stop()
