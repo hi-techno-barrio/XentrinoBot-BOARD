@@ -4,21 +4,21 @@
 #define CS_THRESHOLD 15   // Definition of safety current (Check: "1.3 Monster Shield Example").
 
 //MOTOR 1
-#define MOTOR_A1_PIN 3 //7
-#define MOTOR_B1_PIN 2 //8
+#define MOTOR_A1_PIN 7
+#define MOTOR_B1_PIN 8
 
 //MOTOR 2
-#define MOTOR_A2_PIN  6// 4
-#define MOTOR_B2_PIN  1 // 9
+#define MOTOR_A2_PIN  4
+#define MOTOR_B2_PIN  9
 
-#define PWM_MOTOR_1 5 // 5
-#define PWM_MOTOR_2 4 // 6
+#define PWM_MOTOR_1 5
+#define PWM_MOTOR_2 6
 
 #define CURRENT_SEN_1 A2
 #define CURRENT_SEN_2 A3
 
-#define EN_PIN_1 7 //A0
-#define EN_PIN_2 8 //A1
+#define EN_PIN_1 A0
+#define EN_PIN_2 A1
 
 #define MOTOR_1 0
 #define MOTOR_2 1
@@ -61,14 +61,11 @@ void loop()
 {
   char  user_input;   
   String serialReceived;
-  
-  
+ 
   while(Serial.available())
   {
     serialReceived = Serial.readStringUntil('\n');
-      user_input = serialReceived.charAt(0);
-
-
+    user_input = serialReceived.charAt(0);
     digitalWrite(EN_PIN_1, HIGH);
     digitalWrite(EN_PIN_2, HIGH); 
 
