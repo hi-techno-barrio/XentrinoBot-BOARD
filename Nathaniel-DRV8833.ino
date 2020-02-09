@@ -1,7 +1,6 @@
 #define BRAKE 0
 #define CW    1
 #define CCW   2
-#define CS_THRESHOLD 15   // Definition of safety current (Check: "1.3 Monster Shield Example").
 
 //MOTOR 1
 #define MOTOR_A1_PIN 3 //7
@@ -10,15 +9,6 @@
 //MOTOR 2
 #define MOTOR_A2_PIN  6// 4
 #define MOTOR_B2_PIN  1 // 9
-
-#define PWM_MOTOR_1 5 // 5
-#define PWM_MOTOR_2 4 // 6
-
-#define CURRENT_SEN_1 A2
-#define CURRENT_SEN_2 A3
-
-#define EN_PIN_1 7 //A0
-#define EN_PIN_2 8 //A1
 
 #define MOTOR_1 0
 #define MOTOR_2 1
@@ -30,20 +20,10 @@ void setup()
 {
   pinMode(MOTOR_A1_PIN, OUTPUT);
   pinMode(MOTOR_B1_PIN, OUTPUT);
-
   pinMode(MOTOR_A2_PIN, OUTPUT);
   pinMode(MOTOR_B2_PIN, OUTPUT);
 
-  pinMode(PWM_MOTOR_1, OUTPUT);
-  pinMode(PWM_MOTOR_2, OUTPUT);
-
-  pinMode(CURRENT_SEN_1, OUTPUT);
-  pinMode(CURRENT_SEN_2, OUTPUT);  
-
-  pinMode(EN_PIN_1, OUTPUT);
-  pinMode(EN_PIN_2, OUTPUT);
-
-  Serial.begin(9600);              // Initiates the serial to do the monitoring 
+ Serial.begin(9600);              // Initiates the serial to do the monitoring 
   Serial.println("Begin motor control");
   Serial.println(); //Print function list for user selection
   Serial.println("Enter number for control option:");
@@ -61,13 +41,11 @@ void loop()
 {
   char  user_input;   
   String serialReceived;
-  
-  
+   
   while(Serial.available())
   {
-    serialReceived = Serial.readStringUntil('\n');
-      user_input = serialReceived.charAt(0);
-
+   serialReceived = Serial.readStringUntil('\n');
+   user_input = serialReceived.charAt(0);
 
     digitalWrite(EN_PIN_1, HIGH);
     digitalWrite(EN_PIN_2, HIGH); 
@@ -160,42 +138,44 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
 {
   if(motor == MOTOR_1)
   {
-    if(direct == CW)
+    if(direct == CW)        //  Forward
     {
       digitalWrite(MOTOR_A1_PIN, LOW); 
-      digitalWrite(MOTOR_B1_PIN, HIGH);
+      analogWrite(MOTOR_B1_PIN, pwm); 
+ 
     }
-    else if(direct == CCW)
+    else if(direct == CCW)  //  Reverse
     {
-      digitalWrite(MOTOR_A1_PIN, HIGH);
-      digitalWrite(MOTOR_B1_PIN, LOW);      
+      digitalWrite(MOTOR_B1_PIN, LOW);
+       analogWrite(MOTOR_A1_PIN, pwm); 
+      
     }
     else
     {
-      digitalWrite(MOTOR_A1_PIN, LOW);
-      digitalWrite(MOTOR_B1_PIN, LOW);            
+      digitalWrite(MOTOR_A1_PIN, HIGH);
+      digitalWrite(MOTOR_B1_PIN, HIGH);            
     }
     
-    analogWrite(PWM_MOTOR_1, pwm); 
   }
   else if(motor == MOTOR_2)
   {
-    if(direct == CW)
+    if(direct == CW)        //  Forward
     {
       digitalWrite(MOTOR_A2_PIN, LOW);
-      digitalWrite(MOTOR_B2_PIN, HIGH);
+      analogWrite(MOTOR_B2_PIN, pwm); 
+ 
     }
-    else if(direct == CCW)
+    else if(direct == CCW)  //  Reverse
     {
-      digitalWrite(MOTOR_A2_PIN, HIGH);
-      digitalWrite(MOTOR_B2_PIN, LOW);      
+      digitalWrite(MOTOR_B2_PIN, LOW); 
+      analogWrite(MOTOR_A2_PIN, pwm); 
+      
     }
     else
     {
-      digitalWrite(MOTOR_A2_PIN, LOW);
-      digitalWrite(MOTOR_B2_PIN, LOW);            
+      digitalWrite(MOTOR_A2_PIN, HIGH);
+      digitalWrite(MOTOR_B2_PIN, HIGH);            
     }
     
-    analogWrite(PWM_MOTOR_2, pwm);
   }
 }
