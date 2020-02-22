@@ -1,41 +1,33 @@
-/*
- * Teensy 3.1/3.2/4.0
- * Test program
- * Hi-Techno Barrio
- * 
- */
-
 #define BRAKE 0
 #define CW    1
 #define CCW   2
 #define CS_THRESHOLD 15   // Definition of safety current (Check: "1.3 Monster Shield Example").
 
 //MOTOR 1
-#define MOTOR_A1_PIN 2 
-#define MOTOR_B1_PIN 0 
+#define MOTOR_A1_PIN 3 //7
+#define MOTOR_B1_PIN 2 //8
 
 //MOTOR 2
-#define MOTOR_A2_PIN 5
-#define MOTOR_B2_PIN 1
+#define MOTOR_A2_PIN  6// 4
+#define MOTOR_B2_PIN  1 // 9
 
-#define PWM_MOTOR_1 4
-#define PWM_MOTOR_2 3
+#define PWM_MOTOR_1 5 // 5
+#define PWM_MOTOR_2 4 // 6
 
 #define CURRENT_SEN_1 A2
-#define CURRENT_SEN_2 A0 
+#define CURRENT_SEN_2 A3
 
-#define EN_PIN_1 7 
-#define EN_PIN_2 8  
+#define EN_PIN_1 7 //A0
+#define EN_PIN_2 8 //A1
 
 #define MOTOR_1 0
 #define MOTOR_2 1
-int led = 13;
+
 short usSpeed = 150;  //default motor speed
 unsigned short usMotor_Status = BRAKE;
  
 void setup()                         
 {
-  pinMode(led, OUTPUT);
   pinMode(MOTOR_A1_PIN, OUTPUT);
   pinMode(MOTOR_B1_PIN, OUTPUT);
 
@@ -63,29 +55,33 @@ void setup()
   SerialUSB.println("-. DECREASE SPEED");
   SerialUSB.println();
 
- delay(500);
 }
 
 void loop() 
 {
-  char user_input;   
- 
- twinkle();
+  char  user_input;   
+  String SerialUSBReceived;
+  
   
   while(SerialUSB.available())
   {
-    user_input = SerialUSB.read(); //Read user input and trigger appropriate function
+    SerialUSBReceived = SerialUSB.readStringUntil('\n');
+      user_input = SerialUSBReceived.charAt(0);
+
+
     digitalWrite(EN_PIN_1, HIGH);
     digitalWrite(EN_PIN_2, HIGH); 
-     
-    if (user_input =='1')
-    {
-       Stop();
+
+    if (user_input== '1')
+    { 
+     Stop();
     }
-    else if(user_input =='2')
-    {
-      Forward();
+    else
+    if (user_input== '2')
+    { 
+     Forward();
     }
+    
     else if(user_input =='3')
     {
       Reverse();
@@ -97,10 +93,6 @@ void loop()
     else if(user_input =='-')
     {
       DecreaseSpeed();
-    }
-   else if(user_input =='4')
-    {
-      readCurrentSensor();
     }
     else
     {
@@ -164,21 +156,6 @@ void DecreaseSpeed()
   motorGo(MOTOR_2, usMotor_Status, usSpeed);  
 }
 
-void twinkle ()
-{
-  digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(10);                 // wait for a second
-  digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);                // wait for a second
-}
-
-void readCurrentSensor()
-{
- float current1,current2;
- current1 = analogRead(A2);
- current2 = analogRead(A0);
- 
-}
 void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that controls the variables: motor(0 ou 1), direction (cw ou ccw) e pwm (entra 0 e 255);
 {
   if(motor == MOTOR_1)
