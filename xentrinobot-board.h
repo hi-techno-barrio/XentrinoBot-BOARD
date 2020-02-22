@@ -6,8 +6,8 @@
   
  */
 // MOTOR 1
-#define	        M1_ENC_A 	    3					
-#define	        M1_ENC_B 	    15						
+#define	        M1_ENC_A 	    15					
+#define	        M1_ENC_B 	    3						
 #define		M1_PWM1             46
 #define	        M1_IN_A1/M1_CW      34
 #define		M1_IN_B1 /M1_CCW    36
@@ -15,8 +15,8 @@
 #define		CS_1                A2
 
 // MOTOR 2	
-#define		M2_ENC_A	     2			
-#define		M2_ENC_B             17
+#define		M2_ENC_A	     17			
+#define		M2_ENC_B             2
 #define		M2_PWM2		     44
 #define		M2_IN_A2/M2_CW	     32
 #define		M2_IN_B2/M2_CCW	     38
@@ -24,8 +24,8 @@
 #define		CS_2                 A0
 	
 // MOTOR 3		
-#define		M3_ENC_A 	     18	
-#define	        M3_ENC_B	     40				
+#define		M3_ENC_A 	     40	
+#define	        M3_ENC_B	     18				
 #define		M3_PWM3  	      6
 #define		M3_IN_A/M3_CW 	      7
 #define		M3_IN_B/M3_CCW 	      9
