@@ -33,8 +33,8 @@
 #define		CS_3                 A11
 			
 // MOTOR 4	
-#define		M4_ENC_A	      19		
-#define		M4_ENC_B 	      42			
+#define		M4_ENC_A	      42		
+#define		M4_ENC_B 	      19			
 #define		M4_PWM4  	       5
 #define		M4_IN_A/M4_CW 	       8
 #define		M4_IN_B/M4_CCW 	      11
