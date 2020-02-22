@@ -51,17 +51,17 @@ void setup()
   pinMode(EN_PIN_1, OUTPUT);
   pinMode(EN_PIN_2, OUTPUT);
 
-  SerialUSBUSB.begin(9600);              // Initiates the SerialUSBUSB to do the monitoring 
-  SerialUSBUSB.println("Begin motor control");
-  SerialUSBUSB.println(); //Print function list for user selection
-  SerialUSBUSB.println("Enter number for control option:");
-  SerialUSBUSB.println("1. STOP");
-  SerialUSBUSB.println("2. FORWARD");
-  SerialUSBUSB.println("3. REVERSE");
-  SerialUSBUSB.println("4. READ CURRENT");
-  SerialUSBUSB.println("+. INCREASE SPEED");
-  SerialUSBUSB.println("-. DECREASE SPEED");
-  SerialUSBUSB.println();
+  SerialUSB.begin(9600);              // Initiates the SerialUSB to do the monitoring 
+  SerialUSB.println("Begin motor control");
+  SerialUSB.println(); //Print function list for user selection
+  SerialUSB.println("Enter number for control option:");
+  SerialUSB.println("1. STOP");
+  SerialUSB.println("2. FORWARD");
+  SerialUSB.println("3. REVERSE");
+  SerialUSB.println("4. READ CURRENT");
+  SerialUSB.println("+. INCREASE SPEED");
+  SerialUSB.println("-. DECREASE SPEED");
+  SerialUSB.println();
 
  delay(500);
 }
@@ -72,9 +72,9 @@ void loop()
  
  twinkle();
   
-  while(SerialUSBUSB.available())
+  while(SerialUSB.available())
   {
-    user_input = SerialUSBUSB.read(); //Read user input and trigger appropriate function
+    user_input = SerialUSB.read(); //Read user input and trigger appropriate function
     digitalWrite(EN_PIN_1, HIGH);
     digitalWrite(EN_PIN_2, HIGH); 
      
@@ -104,7 +104,7 @@ void loop()
     }
     else
     {
-      SerialUSBUSB.println("Invalid option entered.");
+      SerialUSB.println("Invalid option entered.");
     }
       
   }
@@ -112,7 +112,7 @@ void loop()
 
 void Stop()
 {
-  SerialUSBUSB.println("Stop");
+  SerialUSB.println("Stop");
   usMotor_Status = BRAKE;
   motorGo(MOTOR_1, usMotor_Status, 0);
   motorGo(MOTOR_2, usMotor_Status, 0);
@@ -120,7 +120,7 @@ void Stop()
 
 void Forward()
 {
-  SerialUSBUSB.println("Forward");
+  SerialUSB.println("Forward");
   usMotor_Status = CW;
   motorGo(MOTOR_1, usMotor_Status, usSpeed);
   motorGo(MOTOR_2, usMotor_Status, usSpeed);
@@ -128,7 +128,7 @@ void Forward()
 
 void Reverse()
 {
-  SerialUSBUSB.println("Reverse");
+  SerialUSB.println("Reverse");
   usMotor_Status = CCW;
   motorGo(MOTOR_1, usMotor_Status, usSpeed);
   motorGo(MOTOR_2, usMotor_Status, usSpeed);
@@ -142,8 +142,8 @@ void IncreaseSpeed()
     usSpeed = 255;  
   }
   
-  SerialUSBUSB.print("Speed +: ");
-  SerialUSBUSB.println(usSpeed);
+  SerialUSB.print("Speed +: ");
+  SerialUSB.println(usSpeed);
 
   motorGo(MOTOR_1, usMotor_Status, usSpeed);
   motorGo(MOTOR_2, usMotor_Status, usSpeed);  
@@ -157,8 +157,8 @@ void DecreaseSpeed()
     usSpeed = 0;  
   }
   
-  SerialUSBUSB.print("Speed -: ");
-  SerialUSBUSB.println(usSpeed);
+  SerialUSB.print("Speed -: ");
+  SerialUSB.println(usSpeed);
 
   motorGo(MOTOR_1, usMotor_Status, usSpeed);
   motorGo(MOTOR_2, usMotor_Status, usSpeed);  
