@@ -1,7 +1,5 @@
+
 #define BRAKE 0
-#define CW    1
-#define CCW   2
-#define C#define BRAKE 0
 #define CW    1
 #define CCW   2
 #define CS_THRESHOLD 15   // Definition of safety current (Check: "1.3 Monster Shield Example").
