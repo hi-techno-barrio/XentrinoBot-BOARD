@@ -18,8 +18,8 @@
 #define CURRENT_SEN_1 A2
 #define CURRENT_SEN_2 A3
 
-#define EN_PIN_1 14 
-#define EN_PIN_2 13 
+#define EN_PIN_1 7
+#define EN_PIN_2 8
 
 #define MOTOR_1 0
 #define MOTOR_2 1
