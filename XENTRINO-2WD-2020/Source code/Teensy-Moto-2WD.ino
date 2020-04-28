@@ -1,5 +1,9 @@
+/*
+Christopher M Coballes
+Hi-Techno Barrio
+*/
 
-#define BRAKE 0
+#define BRAKES 0
 #define CW    1
 #define CCW   2
 #define CS_THRESHOLD 15   // Definition of safety current (Check: "1.3 Monster Shield Example").
@@ -25,7 +29,7 @@
 #define MOTOR_2 1
 
 short usSpeed = 150;  //default motor speed
-unsigned short usMotor_Status = BRAKE;
+unsigned short usMotor_Status = BRAKES;
  
 void setup()                         
 {
@@ -44,7 +48,7 @@ void setup()
   pinMode(EN_PIN_1, OUTPUT);
   pinMode(EN_PIN_2, OUTPUT);
 
-  Serial.begin(9600);              // Initiates the serial to do the monitoring 
+  Serial.begin(115200);              // Initiates the serial to do the monitoring 
   Serial.println("Begin motor control");
   Serial.println(); //Print function list for user selection
   Serial.println("Enter number for control option:");
@@ -66,47 +70,47 @@ void loop()
   
   while(Serial.available())
   {
-    serialReceived = Serial.readStringUntil('\n');
+      serialReceived = Serial.readStringUntil('\n');
       user_input = serialReceived.charAt(0);
 
 
     digitalWrite(EN_PIN_1, HIGH);
-    digitalWrite(EN_PIN_2, HIGH); 
-
-    if (user_input== '1')
-    { 
-     Stop();
-    }
-    else
-    if (user_input== '2')
-    { 
-     Forward();
-    }
-    
-    else if(user_input =='3')
-    {
-      Reverse();
-    }
-    else if(user_input =='+')
-    {
-      IncreaseSpeed();
-    }
-    else if(user_input =='-')
-    {
-      DecreaseSpeed();
-    }
-    else
-    {
-      Serial.println("Invalid option entered.");
-    }
+    digitalWrite(EN_PIN_2, HIGH);
+     
+     switch(user_input)
+        {
+          case '1':
+          Stop();
+          break;
+          
+          case '2':
+          Forward();
+          break;
+          
+          case '3':
+           Reverse();
+          break;
+          
+          case  '+':
+          IncreaseSpeed();
+          break;
+          
+          case  '-' :
+           DecreaseSpeed();
+          break ;
+          
+          default:
+            Serial.println("Invalid option entered.");
+          break;
+        } // switch
       
-  }
+  }  
 }
 
 void Stop()
 {
   Serial.println("Stop");
-  usMotor_Status = BRAKE;
+  usMotor_Status = BRAKES;
   motorGo(MOTOR_1, usMotor_Status, 0);
   motorGo(MOTOR_2, usMotor_Status, 0);
 }
@@ -159,44 +163,44 @@ void DecreaseSpeed()
 
 void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that controls the variables: motor(0 ou 1), direction (cw ou ccw) e pwm (entra 0 e 255);
 {
-  if(motor == MOTOR_1)
+  switch (motor)
   {
-    if(direct == CW)
-    {
-      digitalWrite(MOTOR_A1_PIN, LOW); 
-      digitalWrite(MOTOR_B1_PIN, HIGH);
-    }
-    else if(direct == CCW)
-    {
-      digitalWrite(MOTOR_A1_PIN, HIGH);
-      digitalWrite(MOTOR_B1_PIN, LOW);      
-    }
-    else
-    {
-      digitalWrite(MOTOR_A1_PIN, LOW);
-      digitalWrite(MOTOR_B1_PIN, LOW);            
-    }
-    
-    analogWrite(PWM_MOTOR_1, pwm); 
-  }
-  else if(motor == MOTOR_2)
-  {
-    if(direct == CW)
-    {
-      digitalWrite(MOTOR_A2_PIN, LOW);
-      digitalWrite(MOTOR_B2_PIN, HIGH);
-    }
-    else if(direct == CCW)
-    {
-      digitalWrite(MOTOR_A2_PIN, HIGH);
-      digitalWrite(MOTOR_B2_PIN, LOW);      
-    }
-    else
-    {
-      digitalWrite(MOTOR_A2_PIN, LOW);
-      digitalWrite(MOTOR_B2_PIN, LOW);            
-    }
-    
-    analogWrite(PWM_MOTOR_2, pwm);
-  }
+    case  MOTOR_1 :
+            if(direct == CW)
+            {
+              digitalWrite(MOTOR_A1_PIN, LOW); 
+              digitalWrite(MOTOR_B1_PIN, HIGH);
+            }
+            else if(direct == CCW)
+            {
+              digitalWrite(MOTOR_A1_PIN, HIGH);
+              digitalWrite(MOTOR_B1_PIN, LOW);      
+            }else 
+            if (direct == BRAKES)
+            {
+            digitalWrite(MOTOR_A1_PIN, LOW);
+            digitalWrite(MOTOR_B1_PIN, LOW);
+            }
+            analogWrite(PWM_MOTOR_1, pwm); 
+    break;
+
+    case MOTOR_2 :
+           if(direct == CW)
+            {
+              digitalWrite(MOTOR_A2_PIN, LOW); 
+              digitalWrite(MOTOR_B2_PIN, HIGH);
+            }
+            else if(direct == CCW)
+            {
+              digitalWrite(MOTOR_A2_PIN, HIGH);
+              digitalWrite(MOTOR_B2_PIN, LOW);      
+            }else 
+            if (direct == BRAKES)
+            {
+            digitalWrite(MOTOR_A2_PIN, LOW);
+            digitalWrite(MOTOR_B2_PIN, LOW);
+            }
+            analogWrite(PWM_MOTOR_2, pwm); 
+    break;
+  } // switches
 }
