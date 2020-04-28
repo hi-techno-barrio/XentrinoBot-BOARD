@@ -1,3 +1,10 @@
+/*
+ * Christopher Coballes
+ * Hi-Techno Barrio
+ * Philippines
+ * 
+ */
+
 #define BRAKES 0
 #define CW    1
 #define CCW   2
@@ -87,34 +94,34 @@ void loop()
     digitalWrite(EN_PIN_1, HIGH);
     digitalWrite(EN_PIN_3, HIGH); 
 
-    if (user_input== '1')
-    { 
-     Stop();
-    }
-    else
-    if (user_input== '2')
-    { 
-     Forward();
-    }
-    
-    else if(user_input =='3')
+    switch(user_input)
     {
-      Reverse();
-    }
-    else if(user_input =='+')
-    {
+      case '1':
+      Stop();
+      break;
+      
+      case '2':
+      Forward();
+      break;
+      
+      case '3':
+       Reverse();
+      break;
+      
+      case  '+':
       IncreaseSpeed();
-    }
-    else if(user_input =='-')
-    {
-      DecreaseSpeed();
-    }
-    else
-    {
-      Serial.println("Invalid option entered.");
-    }    
+      break;
+      
+      case  '-' :
+       DecreaseSpeed();
+      break ;
+      
+      default:
+        Serial.println("Invalid option entered.");
+      break;
+    } // switch  
   }  //while 
-}
+} // loop
 void Stop()
 {
   Serial.println("Stop");
@@ -200,6 +207,7 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
             digitalWrite(MOTOR_A1_PIN, LOW);
             digitalWrite(MOTOR_B1_PIN, LOW);
             }
+            analogWrite(PWM_MOTOR_1, pwm); 
     break;
 
     case MOTOR_2 :
@@ -218,6 +226,7 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
             digitalWrite(MOTOR_A2_PIN, LOW);
             digitalWrite(MOTOR_B2_PIN, LOW);
             }
+            analogWrite(PWM_MOTOR_2, pwm); 
     break;
 
     case MOTOR_3:
@@ -237,6 +246,7 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
             digitalWrite(MOTOR_A3_PIN, LOW);
             digitalWrite(MOTOR_B3_PIN, LOW);
             }
+            analogWrite(PWM_MOTOR_3, pwm); 
     break;
 
     case MOTOR_4 :
@@ -255,6 +265,7 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
             digitalWrite(MOTOR_A4_PIN, LOW);
             digitalWrite(MOTOR_B4_PIN, LOW);
             }
+            analogWrite(PWM_MOTOR_4, pwm); 
     break;
    /* default:
             digitalWrite(MOTOR_A1_PIN, LOW);
@@ -269,4 +280,5 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
   }
     
 }
+
 
