@@ -3,12 +3,12 @@
 #define CCW   2
 
 //MOTOR 1
-#define MOTOR_A1_PIN 3 //7
-#define MOTOR_B1_PIN 2 //8
+#define MOTOR_A1_PIN 3 
+#define MOTOR_B1_PIN 2 
 
 //MOTOR 2
-#define MOTOR_A2_PIN  6// 4
-#define MOTOR_B2_PIN  1 // 9
+#define MOTOR_A2_PIN  6
+#define MOTOR_B2_PIN  1 
 
 #define MOTOR_1 0
 #define MOTOR_2 1
