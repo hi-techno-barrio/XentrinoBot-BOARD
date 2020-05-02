@@ -4,21 +4,21 @@
 #define CS_THRESHOLD 15   // Definition of safety current (Check: "1.3 Monster Shield Example").
 
 //MOTOR 1
-#define MOTOR_A1_PIN 3 //7
-#define MOTOR_B1_PIN 2 //8
+#define MOTOR_A1_PIN 34 //7
+#define MOTOR_B1_PIN 36 //8
 
 //MOTOR 2
-#define MOTOR_A2_PIN  6// 4
-#define MOTOR_B2_PIN  1 // 9
+#define MOTOR_A2_PIN 32//4
+#define MOTOR_B2_PIN 38 //9
 
-#define PWM_MOTOR_1 5 // 5
-#define PWM_MOTOR_2 4 // 6
+#define PWM_MOTOR_1 46 //5
+#define PWM_MOTOR_2 44 //6
 
 #define CURRENT_SEN_1 A2
-#define CURRENT_SEN_2 A3
+#define CURRENT_SEN_2 A0 //A3
 
-#define EN_PIN_1 7 //A0
-#define EN_PIN_2 8 //A1
+#define EN_PIN_1 A6//A0
+#define EN_PIN_2 A4 //A1
 
 #define MOTOR_1 0
 #define MOTOR_2 1
@@ -43,32 +43,29 @@ void setup()
   pinMode(EN_PIN_1, OUTPUT);
   pinMode(EN_PIN_2, OUTPUT);
 
-  SerialUSB.begin(9600);              // Initiates the SerialUSB to do the monitoring 
-  SerialUSB.println("Begin motor control");
-  SerialUSB.println(); //Print function list for user selection
-  SerialUSB.println("Enter number for control option:");
-  SerialUSB.println("1. STOP");
-  SerialUSB.println("2. FORWARD");
-  SerialUSB.println("3. REVERSE");
-  SerialUSB.println("4. READ CURRENT");
-  SerialUSB.println("+. INCREASE SPEED");
-  SerialUSB.println("-. DECREASE SPEED");
-  SerialUSB.println();
+  Serial.begin(9600);              // Initiates the serial to do the monitoring 
+  Serial.println("Begin motor control");
+  Serial.println(); //Print function list for user selection
+  Serial.println("Enter number for control option:");
+  Serial.println("1. STOP");
+  Serial.println("2. FORWARD");
+  Serial.println("3. REVERSE");
+  Serial.println("4. READ CURRENT");
+  Serial.println("+. INCREASE SPEED");
+  Serial.println("-. DECREASE SPEED");
+  Serial.println();
 
 }
 
 void loop() 
 {
+ 
   char  user_input;   
-  String SerialUSBReceived;
-  
-  
-  while(SerialUSB.available())
+  String serialReceived; 
+  while(Serial.available())
   {
-    SerialUSBReceived = SerialUSB.readStringUntil('\n');
-      user_input = SerialUSBReceived.charAt(0);
-
-
+    serialReceived = Serial.readStringUntil('\n');
+    user_input = serialReceived.charAt(0);
     digitalWrite(EN_PIN_1, HIGH);
     digitalWrite(EN_PIN_2, HIGH); 
 
@@ -96,15 +93,14 @@ void loop()
     }
     else
     {
-      SerialUSB.println("Invalid option entered.");
-    }
-      
-  }
+      Serial.println("Invalid option entered.");
+    }    
+  
 }
 
 void Stop()
 {
-  SerialUSB.println("Stop");
+  Serial.println("Stop");
   usMotor_Status = BRAKE;
   motorGo(MOTOR_1, usMotor_Status, 0);
   motorGo(MOTOR_2, usMotor_Status, 0);
@@ -112,7 +108,7 @@ void Stop()
 
 void Forward()
 {
-  SerialUSB.println("Forward");
+  Serial.println("Forward");
   usMotor_Status = CW;
   motorGo(MOTOR_1, usMotor_Status, usSpeed);
   motorGo(MOTOR_2, usMotor_Status, usSpeed);
@@ -120,7 +116,7 @@ void Forward()
 
 void Reverse()
 {
-  SerialUSB.println("Reverse");
+  Serial.println("Reverse");
   usMotor_Status = CCW;
   motorGo(MOTOR_1, usMotor_Status, usSpeed);
   motorGo(MOTOR_2, usMotor_Status, usSpeed);
@@ -134,8 +130,8 @@ void IncreaseSpeed()
     usSpeed = 255;  
   }
   
-  SerialUSB.print("Speed +: ");
-  SerialUSB.println(usSpeed);
+  Serial.print("Speed +: ");
+  Serial.println(usSpeed);
 
   motorGo(MOTOR_1, usMotor_Status, usSpeed);
   motorGo(MOTOR_2, usMotor_Status, usSpeed);  
@@ -149,13 +145,20 @@ void DecreaseSpeed()
     usSpeed = 0;  
   }
   
-  SerialUSB.print("Speed -: ");
-  SerialUSB.println(usSpeed);
+  Serial.print("Speed -: ");
+  Serial.println(usSpeed);
 
   motorGo(MOTOR_1, usMotor_Status, usSpeed);
   motorGo(MOTOR_2, usMotor_Status, usSpeed);  
 }
 
+void readCurrentSensor()
+{
+ float current1,current2;
+ current1 = analogRead(A2);
+ current2 = analogRead(A0);
+ 
+}
 void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that controls the variables: motor(0 ou 1), direction (cw ou ccw) e pwm (entra 0 e 255);
 {
   if(motor == MOTOR_1)
