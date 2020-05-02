@@ -220,38 +220,38 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
             if(direct == CW)
             {
               digitalWrite(MOTOR_A1_PIN, LOW); 
-              digitalWrite(MOTOR_B1_PIN, HIGH);
+              analogWrite(MOTOR_B1_PIN, pwm);
             }
             else if(direct == CCW)
             {
-              digitalWrite(MOTOR_A1_PIN, HIGH);
-              digitalWrite(MOTOR_B1_PIN, LOW);      
+              digitalWrite(MOTOR_B1_PIN, LOW);  
+             analogWrite(MOTOR_A1_PIN, pwm);       
             }else 
             if (direct == BRAKES)
             {
-            digitalWrite(MOTOR_A1_PIN, LOW);
-            digitalWrite(MOTOR_B1_PIN, LOW);
+            digitalWrite(MOTOR_A1_PIN, HIGH);
+            digitalWrite(MOTOR_B1_PIN, HIGH);
             }
-            analogWrite(PWM_MOTOR_1, pwm); 
+            
     break;
 
     case MOTOR_2 :
            if(direct == CW)
             {
               digitalWrite(MOTOR_A2_PIN, LOW); 
-              digitalWrite(MOTOR_B2_PIN, HIGH);
+              analogWrite(MOTOR_B2_PIN, pwm);
             }
             else if(direct == CCW)
-            {
-              digitalWrite(MOTOR_A2_PIN, HIGH);
-              digitalWrite(MOTOR_B2_PIN, LOW);      
+            {   
+             digitalWrite(MOTOR_B2_PIN, LOW);
+             analogWrite(MOTOR_A2_PIN, pwm);
             }else 
             if (direct == BRAKES)
             {
-            digitalWrite(MOTOR_A2_PIN, LOW);
-            digitalWrite(MOTOR_B2_PIN, LOW);
+            digitalWrite(MOTOR_A2_PIN, HIGH);
+            digitalWrite(MOTOR_B2_PIN, HIGH);
             }
-            analogWrite(PWM_MOTOR_2, pwm); 
+            
     break;
   } // switches
 }
