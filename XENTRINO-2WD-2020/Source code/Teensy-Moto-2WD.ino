@@ -9,9 +9,6 @@ Hi-Techno Barrio
 #include "Encoder.h"
 
 #define set_PWM 10
-//#define MAX_RPM  100
-#define EN_PIN_1 7
-#define EN_PIN_2 8
 
 #define MOTOR_1  0
 #define MOTOR_2  1
