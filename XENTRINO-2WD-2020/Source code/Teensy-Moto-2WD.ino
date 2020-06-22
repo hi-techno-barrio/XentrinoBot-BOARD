@@ -76,7 +76,10 @@ void loop()
       
   }  
 }
-
+/*------------------------------------------------------------------------
+ * 
+ * 
+ -------------------------------------------------------------------------*/
 void Stop()
 {
   Serial.println("Stop");
@@ -130,7 +133,6 @@ void DecreaseSpeed()
   motorGo(MOTOR_1, usMotor_Status, usSpeed);
   motorGo(MOTOR_2, usMotor_Status, usSpeed);  
 }
-
 
 void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that controls the variables: motor(0 ou 1), direction (cw ou ccw) e pwm (entra 0 e 255);
 {
