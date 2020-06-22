@@ -49,7 +49,6 @@ void loop()
   char  user_input;   
   String serialReceived;
   
-  
   while(Serial.available())
   {
       serialReceived = Serial.readStringUntil('\n');
@@ -83,7 +82,17 @@ void loop()
           break;
         } // switch
       
-  }  
+  } 
+ /* Test ENCODER & PID parameters */
+    int current_rpm1 =  get_actual_RPM (Encoder1.read(),MAX_RPM);
+    int current_rpm2 =  get_actual_RPM (Encoder2.read(),MAX_RPM);
+ 
+    MOTO1_controller.spin(motor1_pid.compute(set_PWM, current_rpm1));
+    MOTO2_controller.spin(motor2_pid.compute(set_PWM, current_rpm2));
+    Serial.print(current_rpm1);
+    Serial.print("[    ]");
+    Serial.println(current_rpm2);
+ 
 }
 /*------------------------------------------------------------------------
  * 
