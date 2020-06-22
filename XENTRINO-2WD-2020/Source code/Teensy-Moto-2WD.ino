@@ -46,9 +46,6 @@ void loop()
       serialReceived = Serial.readStringUntil('\n');
       user_input = serialReceived.charAt(0);
 
-
-    digitalWrite(EN_PIN_1, HIGH);
-    digitalWrite(EN_PIN_2, HIGH);
      
      switch(user_input)
         {
