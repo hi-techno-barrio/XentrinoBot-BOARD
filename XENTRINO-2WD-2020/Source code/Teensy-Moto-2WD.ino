@@ -161,46 +161,51 @@ void DecreaseSpeed()
   motorGo(MOTOR_2, usMotor_Status, usSpeed);  
 }
 
+
 void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that controls the variables: motor(0 ou 1), direction (cw ou ccw) e pwm (entra 0 e 255);
 {
   switch (motor)
   {
     case  MOTOR_1 :
-            if(direct == CW)
-            {
-              digitalWrite(MOTOR_A1_PIN, LOW); 
-              digitalWrite(MOTOR_B1_PIN, HIGH);
-            }
-            else if(direct == CCW)
-            {
-              digitalWrite(MOTOR_A1_PIN, HIGH);
-              digitalWrite(MOTOR_B1_PIN, LOW);      
-            }else 
-            if (direct == BRAKES)
-            {
-            digitalWrite(MOTOR_A1_PIN, LOW);
-            digitalWrite(MOTOR_B1_PIN, LOW);
-            }
-            analogWrite(PWM_MOTOR_1, pwm); 
+       switch (direct)
+         {
+          case CW:
+              digitalWrite(MOTOR1_IN_A, LOW); 
+              digitalWrite(MOTOR1_IN_B, HIGH);
+           break;
+           
+           case CCW:
+             digitalWrite(MOTOR1_IN_A, HIGH); 
+             digitalWrite(MOTOR1_IN_B, LOW);     
+           break;
+           
+           case BRAKES: 
+            digitalWrite(MOTOR1_IN_A, LOW); 
+            digitalWrite(MOTOR1_IN_B, LOW);
+           break;
+          }// motor 1
+    analogWrite(MOTOR1_PWM, pwm); 
     break;
 
     case MOTOR_2 :
-           if(direct == CW)
+       switch (direct)
             {
-              digitalWrite(MOTOR_A2_PIN, LOW); 
-              digitalWrite(MOTOR_B2_PIN, HIGH);
-            }
-            else if(direct == CCW)
-            {
-              digitalWrite(MOTOR_A2_PIN, HIGH);
-              digitalWrite(MOTOR_B2_PIN, LOW);      
-            }else 
-            if (direct == BRAKES)
-            {
-            digitalWrite(MOTOR_A2_PIN, LOW);
-            digitalWrite(MOTOR_B2_PIN, LOW);
-            }
-            analogWrite(PWM_MOTOR_2, pwm); 
+           case CW:
+              digitalWrite(MOTOR2_IN_A, LOW); 
+              digitalWrite(MOTOR2_IN_B, HIGH);
+           break;
+           
+           case CCW:
+             digitalWrite(MOTOR2_IN_A, HIGH); 
+             digitalWrite(MOTOR2_IN_B, LOW);     
+           break;
+           
+           case BRAKES: 
+            digitalWrite(MOTOR2_IN_A, LOW); 
+            digitalWrite(MOTOR2_IN_B, LOW);
+           break;
+            }//motor 2
+    analogWrite(MOTOR2_PWM , pwm); 
     break;
   } // switches
 }
