@@ -17,6 +17,15 @@ Hi-Techno Barrio
 #define CCW      2
 #define CS_THRESHOLD 15   // Definition of safety current (Check: "1.3 Monster Shield Example")
 
+Encoder Encoder1(MOTOR1_ENCODER_A, MOTOR1_ENCODER_B);
+Encoder Encoder2(MOTOR2_ENCODER_A, MOTOR2_ENCODER_B);
+
+Controller MOTO1_controller(Controller::MOTOR_DRIVER, MOTOR1_PWM, MOTOR1_IN_A, MOTOR1_IN_B);
+Controller MOTO2_controller(Controller::MOTOR_DRIVER, MOTOR2_PWM, MOTOR2_IN_A, MOTOR2_IN_B); 
+
+PID motor1_pid(PWM_MIN, PWM_MAX, K_P, K_I, K_D);
+PID motor2_pid(PWM_MIN, PWM_MAX, K_P, K_I, K_D);
+
 short usSpeed = 150;  //default motor speed
 unsigned short usMotor_Status = BRAKES;
  
@@ -156,6 +165,7 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
             digitalWrite(MOTOR1_IN_B, LOW);
            break;
           }// motor 1
+    
     analogWrite(MOTOR1_PWM, pwm); 
     break;
 
@@ -177,6 +187,7 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
             digitalWrite(MOTOR2_IN_B, LOW);
            break;
             }//motor 2
+    
     analogWrite(MOTOR2_PWM , pwm); 
     break;
   } // switches
