@@ -3,7 +3,6 @@
  * Hi-Techno Barrio
  * Philippines
  * 
- */ Please check these libraries to Xentrinobot
  */
 #define XENTRINOBOT
 //#define ENCODER_OPTIMIZE_INTERRUPTS // comment this out on Non-Teensy boards
@@ -33,7 +32,7 @@ Controller MOTO4_controller(Controller::MOTOR_DRIVER, MOTOR4_PWM, MOTOR4_IN_A, M
 void setup()                         
 {
 
-  Serial.begin(57600);              // Initiates the Serial to do the monitoring 
+  Serial.begin(115200);              // Initiates the Serial to do the monitoring 
   Serial.println("Begin motor control");
   Serial.println(); //Print function list for user selection
   Serial.println("Enter number for control option:");
@@ -92,30 +91,30 @@ void Stop()
 {
   Serial.println("Stop");
   usMotor_Status = BRAKE;
-  motorGo(MOTOR_1, usMotor_Status, usSpeed);
-  motorGo(MOTOR_2, usMotor_Status, usSpeed);
-  motorGo(MOTOR_3, usMotor_Status, usSpeed);
-  motorGo(MOTOR_4, usMotor_Status, usSpeed);
+  runMotor(MOTOR_1, usMotor_Status, 0);
+  runMotor(MOTOR_2, usMotor_Status, 0);
+  runMotor(MOTOR_3, usMotor_Status, 0);
+  runMotor(MOTOR_4, usMotor_Status, 0);
 }
 
 void Forward()
 {
   Serial.println("Forward");
   usMotor_Status = CW;
-  motorGo(MOTOR_1, usMotor_Status, usSpeed);
-  motorGo(MOTOR_2, usMotor_Status, usSpeed);
-  motorGo(MOTOR_3, usMotor_Status, usSpeed);
-  motorGo(MOTOR_4, usMotor_Status, usSpeed);
+  runMotor(MOTOR_1, usMotor_Status, usSpeed);
+  runMotor(MOTOR_2, usMotor_Status, usSpeed);
+  runMotor(MOTOR_3, usMotor_Status, usSpeed);
+  runMotor(MOTOR_4, usMotor_Status, usSpeed);
 }
 
 void Reverse()
 {
   Serial.println("Reverse");
   usMotor_Status = CCW;
-  motorGo(MOTOR_1, usMotor_Status, usSpeed);
-  motorGo(MOTOR_2, usMotor_Status, usSpeed);
-  motorGo(MOTOR_3, usMotor_Status, usSpeed);
-  motorGo(MOTOR_4, usMotor_Status, usSpeed);
+  runMotor(MOTOR_1, usMotor_Status, usSpeed);
+  runMotor(MOTOR_2, usMotor_Status, usSpeed);
+  runMotor(MOTOR_3, usMotor_Status, usSpeed);
+  runMotor(MOTOR_4, usMotor_Status, usSpeed);
 }
 
 void IncreaseSpeed()
@@ -129,10 +128,10 @@ void IncreaseSpeed()
   Serial.print("Speed +: ");
   Serial.println(usSpeed);
 
-  motorGo(MOTOR_1, usMotor_Status, usSpeed);
-  motorGo(MOTOR_2, usMotor_Status, usSpeed);
-  motorGo(MOTOR_3, usMotor_Status, usSpeed);
-  motorGo(MOTOR_4, usMotor_Status, usSpeed);
+  runMotor(MOTOR_1, usMotor_Status, usSpeed);
+  runMotor(MOTOR_2, usMotor_Status, usSpeed);
+  runMotor(MOTOR_3, usMotor_Status, usSpeed);
+  runMotor(MOTOR_4, usMotor_Status, usSpeed);
 }
 
 void DecreaseSpeed()
@@ -146,23 +145,23 @@ void DecreaseSpeed()
   Serial.print("Speed -: ");
   Serial.println(usSpeed);
 
-  motorGo(MOTOR_1, usMotor_Status, usSpeed);
-  motorGo(MOTOR_2, usMotor_Status, usSpeed);
-  motorGo(MOTOR_3, usMotor_Status, usSpeed);
-  motorGo(MOTOR_4, usMotor_Status, usSpeed); 
+  runMotor(MOTOR_1, usMotor_Status, usSpeed);
+  runMotor(MOTOR_2, usMotor_Status, usSpeed);
+  runMotor(MOTOR_3, usMotor_Status, usSpeed);
+  runMotor(MOTOR_4, usMotor_Status, usSpeed);
 }
 
 void twinkle ()
 {
 
   digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(10);               // wait for a second
+  delay(10);                 // wait for a second
   digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
   delay(10);  
 }
 
 
-void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that controls the variables: motor(0 ou 1), direction (cw ou ccw) e pwm (entra 0 e 255);
+void runMotor(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that controls the variables: motor(0 ou 1), direction (cw ou ccw) e pwm (entra 0 e 255);
 {
   switch (motor)
   {
@@ -183,7 +182,7 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
             digitalWrite(MOTOR1_IN_B , LOW);
             }
            
-          MOTO1_controller.testMotor(MOTOR1_PWM); 
+          MOTO1_controller.run(pwm); 
     break;
 
     case MOTOR_2 :
@@ -202,7 +201,7 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
             digitalWrite(MOTOR2_IN_A , LOW);
             digitalWrite(MOTOR2_IN_B , LOW);
             }    
-       MOTO2_controller.testMotor(MOTOR2_PWM);  
+       MOTO2_controller.run(pwm);  
     break;
 
         case MOTOR_3 :
@@ -221,7 +220,7 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
             digitalWrite(MOTOR3_IN_A , LOW);
             digitalWrite(MOTOR3_IN_B , LOW);
             }    
-       MOTO2_controller.testMotor(MOTOR3_PWM);  
+       MOTO3_controller.run(pwm);  
     break;
 
         case MOTOR_4 :
@@ -240,7 +239,7 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
             digitalWrite(MOTOR4_IN_A , LOW);
             digitalWrite(MOTOR4_IN_B , LOW);
             }    
-       MOTO2_controller.testMotor(MOTOR4_PWM);  
+       MOTO4_controller.run(pwm);  
     break;
   }
 }
@@ -248,7 +247,7 @@ void motorGo(uint8_t motor, uint8_t direct, uint8_t pwm)         //Function that
 void led_indicator()
 {
   digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(100);               // wait for a second
+  delay(150);               // wait for a second
   digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
   delay(100);               // wait for a second
 }
