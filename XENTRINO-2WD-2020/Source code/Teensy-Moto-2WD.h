@@ -24,3 +24,14 @@
 #define H2_4  15
 #define H2_5  14
 #define H2_6  13 
+
+
+#define buf_PWM1   6   // D5
+#define buf_PWM2   5   // D6
+#define buf_EN1    0   // A0
+#define buf_EN2    1   // A1
+#define buf_CTL    9   // Tri-State 
+#define buf_IN_A1  4   // D7
+#define buf_IN_B1  3   // D8
+#define buf_IN_A2  8   // D4
+#define buf_IN_B2  2   // D9 
