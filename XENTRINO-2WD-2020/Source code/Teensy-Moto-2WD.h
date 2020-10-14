@@ -31,7 +31,7 @@
 #define buf_EN1    0   // A0
 #define buf_EN2    1   // A1
 #define buf_CTL    9   // Tri-State 
-#define buf_IN_A1  4   // D7
-#define buf_IN_B1  3   // D8
-#define buf_IN_A2  8   // D4
-#define buf_IN_B2  2   // D9 
+#define MOTOR1_IN_A  4   // D7
+#define MOTOR1_IN_B  3   // D8
+#define MOTOR2_IN_A  8   // D4
+#define MOTOR2_IN_B 2   // D9 
