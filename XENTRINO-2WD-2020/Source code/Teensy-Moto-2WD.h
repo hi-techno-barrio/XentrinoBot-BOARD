@@ -28,10 +28,10 @@
 // Teensy -LM2596-5V MOTO
 #define MOTOR1_PWM   6   // D5
 #define MOTOR2_PWM   5   // D6
-#define buf_EN1    0   // A0
-#define buf_EN2    1   // A1
-#define buf_CTL    9   // Tri-State 
+#define MOTOR1_EN    0   // A0
+#define MOTOR2_EN    1   // A1
+#define BUFF_CTL     9   // Tri-State 
 #define MOTOR1_IN_A  4   // D7
 #define MOTOR1_IN_B  3   // D8
 #define MOTOR2_IN_A  8   // D4
-#define MOTOR2_IN_B 2   // D9 
+#define MOTOR2_IN_B  2   // D9 
