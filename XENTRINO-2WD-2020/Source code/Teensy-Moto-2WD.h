@@ -25,7 +25,7 @@
 #define H2_5  14
 #define H2_6  13 
 
-
+// Teensy -LM2596-5V MOTO
 #define buf_PWM1   6   // D5
 #define buf_PWM2   5   // D6
 #define buf_EN1    0   // A0
