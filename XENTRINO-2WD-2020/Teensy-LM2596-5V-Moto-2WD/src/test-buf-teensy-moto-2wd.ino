@@ -19,20 +19,10 @@
 #define MOTOR_A2_PIN    7   // D4
 #define MOTOR_B2_PIN    2   // D9 
 
-#define BRAKE 0
-#define CW    1
-#define CCW   2
-#define CS_THRESHOLD 15   // Definition of safety current (Check: "1.3 Monster Shield Example").
-
-#define MOTOR_1 0
-#define MOTOR_2 1
 int led = 13;
-short usSpeed = 150;  //default motor speed
-unsigned short usMotor_Status = BRAKE;
 
 
 
- 
 //   avoid using pins with LEDs attached
 void setup()                         
 {
@@ -70,29 +60,25 @@ void loop()
 
   char  user_input;   
   String serialReceived;
-  
+  digitalWrite(BUFF_STATE_DIR, LOW); 
   while(Serial.available())
   {
     serialReceived = Serial.readStringUntil('\n');
     user_input = serialReceived.charAt(0);
-    digitalWrite(EN_PIN_1, HIGH);
-    digitalWrite(EN_PIN_2, HIGH); 
-    digitalWrite(BUFF_STATE_DIR, LOW); 
      
-  switch(user_input)
-    {
-      
+    switch(user_input)
+    {   
      case  '0' :
        testZero();
      break;
      case  '1' :
        testOne();
      break;
-      case '2' :
-       testTwo();
+      case '8' :
+       testEight();
      break;
-     case '3' :
-       testThree();
+     case '9' :
+       testNine();
      break;
       case '4' :
        testFour();
@@ -116,74 +102,74 @@ void loop()
 //zero
 void  testZero()
 {
-  Serial.println("One");
+  Serial.println("A0");
   digitalWrite(EN_PIN_1, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(10);                 // wait for a second
+  delay(500);                  // wait for a second
   digitalWrite(EN_PIN_1, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);      
+ delay(500);       
 }
 //one
 void  testOne()
 {
-  Serial.println("Two");
-  digitalWrite(EN_PIN_2, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(10);                 // wait for a second
-  digitalWrite(EN_PIN_2, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);      
+  Serial.println("A1");
+ digitalWrite(EN_PIN_2, HIGH);   // turn the LED on (HIGH is the voltage level)
+ delay(500);                  // wait for a second
+ digitalWrite(EN_PIN_2, LOW);    // turn the LED off by making the voltage LOW
+  delay(500); ;      
 }
 //two
-void  testTwo()
+void  testNine()
 {
-  Serial.println("Two");
+  Serial.println("D9");
   digitalWrite(MOTOR_B2_PIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(10);                 // wait for a second
+  delay(500);                  // wait for a second
   digitalWrite(MOTOR_B2_PIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);      
+  delay(500);      
 }
 //three
-void  testThree()
+void  testEight()
 {
-  Serial.println("Three");
+  Serial.println("D8");
   digitalWrite(MOTOR_B1_PIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(10);                 // wait for a second
+  delay(500);                  // wait for a second
   digitalWrite(MOTOR_B1_PIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);      
+  delay(500);       
 }
 //four
-void  testFour()
+void  testSeven()
 {
-  Serial.println("Four");
+  Serial.println("D7");
   digitalWrite(MOTOR_A1_PIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(10);                 // wait for a second
+  delay(500);                  // wait for a second
   digitalWrite(MOTOR_A1_PIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);      
+  delay(500);       
 }
 //five
 void  testFive()
 {
-  Serial.println("Five");
-  digitalWrite(PWM_MOTOR_2, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(10);                 // wait for a second
-  digitalWrite(PWM_MOTOR_2, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);      
+  Serial.println("D5");
+  digitalWrite(PWM_MOTOR_1, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(500);                 // wait for a second
+  digitalWrite(PWM_MOTOR_1, LOW);    // turn the LED off by making the voltage LOW
+  delay(500);      
 }
 //six
 void  testSix()
 {
-  Serial.println("Six");
-  digitalWrite(PWM_MOTOR_1, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(10);                 // wait for a second
-  digitalWrite(PWM_MOTOR_1, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);      
+  Serial.println("D6");
+  digitalWrite(PWM_MOTOR_2, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(500);                 // wait for a second
+  digitalWrite(PWM_MOTOR_2, LOW);    // turn the LED off by making the voltage LOW
+  delay(500);      
 }
 // seven
-void  testSeven()
+void  testFour()
 {
-  Serial.println("Seven");
+  Serial.println("D4");
   digitalWrite(MOTOR_A2_PIN , HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(10);                 // wait for a second
+  delay(500);                  // wait for a second
   digitalWrite(MOTOR_A2_PIN , LOW);    // turn the LED off by making the voltage LOW
-  delay(100);      
+ delay(500);       
 }
 
 
@@ -191,7 +177,7 @@ void  testSeven()
 void twinkle ()
 {
   digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(10);                 // wait for a second
+  delay(500);                  // wait for a second
   digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);                // wait for a second
+ delay(500);                 // wait for a second
 }
