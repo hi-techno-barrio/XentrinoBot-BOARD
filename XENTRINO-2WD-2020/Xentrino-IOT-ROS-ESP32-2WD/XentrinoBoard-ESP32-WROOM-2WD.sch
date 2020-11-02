@@ -1584,7 +1584,7 @@ Connection ~ 8200 1500
 Wire Wire Line
 	8200 1500 8200 1400
 Text GLabel 7550 4000 2    50   Input ~ 0
-TX
+X1
 Wire Wire Line
 	7550 4000 7450 4000
 Wire Wire Line
