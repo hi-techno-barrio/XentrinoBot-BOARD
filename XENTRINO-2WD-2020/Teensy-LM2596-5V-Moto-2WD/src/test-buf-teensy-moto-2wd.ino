@@ -17,8 +17,19 @@
 #define EN_PIN_2        1   // A1
 #define PWM_MOTOR_2     5   // D6
 #define MOTOR_A2_PIN    7   // D4
-#define MOTOR_B2_PIN    2   // D9 
+#define MOTOR_B2_PIN    2   // D9 -OK
 
+
+// Teensy -LM2596-5V MOTO
+//#define MOTOR1_PWM   6   // D5
+//#define MOTOR2_PWM   5   // D6
+//#define MOTOR1_EN    0   // A0
+//#define MOTOR2_EN    1   // A1
+//#define BUFF_CTL     9   // Tri-State 
+//#define MOTOR1_IN_A  4   // D7
+//#define MOTOR1_IN_B  3   // D8
+//#define MOTOR2_IN_A  8   // D4
+//#define MOTOR2_IN_B  2   // D9
 int led = 13;
 
 
