@@ -76,7 +76,7 @@ void loop()
   {
     serialReceived = Serial.readStringUntil('\n');
     user_input = serialReceived.charAt(0);
-     
+    resets();   
     switch(user_input)
     {   
      case  '0' :
@@ -109,6 +109,25 @@ void loop()
     } // switch     
   } // while 
  } //loop
+
+// resets()
+void resets()
+{
+
+   digitalWrite(MOTOR_A1_PIN, LOW); 
+  digitalWrite(MOTOR_A1_PIN, LOW);
+  digitalWrite(MOTOR_B1_PIN, LOW);
+
+  digitalWrite(MOTOR_A2_PIN, LOW);
+  digitalWrite(MOTOR_B2_PIN, LOW);
+
+  digitalWrite(PWM_MOTOR_1, LOW);
+  digitalWrite(PWM_MOTOR_2, LOW);
+  
+  digitalWrite(EN_PIN_1, LOW);
+  digitalWrite(EN_PIN_2, LOW);
+
+}
  
 //zero
 void  testZero()
